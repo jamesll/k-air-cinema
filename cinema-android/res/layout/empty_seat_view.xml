@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+<!--     <ImageView -->
+<!--         android:id="@+id/seat_dialog_image" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="fill_parent" -->
+<!--         android:layout_marginRight="10dp" /> -->
+
+<!--     <TextView -->
+<!--         android:id="@+id/seat_dialog_text" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="fill_parent" -->
+<!--         android:textColor="#FFF" /> -->
+
+    <Button
+        android:id="@+id/seat_dialog_button_book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Book" />
+
+    <Button
+        android:id="@+id/seat_dialgo_button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel" />
+
+</LinearLayout>
