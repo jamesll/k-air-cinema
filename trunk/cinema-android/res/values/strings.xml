@@ -4,5 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
-
+    <string name="title_activity_roy__main">Roy_MainActivity</string>
+	<string name="MovieDetail">点击看影片具体信息：.................................</string>
+    
 </resources>
