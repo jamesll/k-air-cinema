@@ -62,6 +62,7 @@ public class Roy_MainActivity extends Activity {
         mMinute = c.get(Calendar.MINUTE);
 
         // Test Movie picture showup
+        // Ken gor, you can intent in here
         final Context context = Roy_MainActivity.this.getApplicationContext();
 
         OnClickListener listener10 = new OnClickListener() {
