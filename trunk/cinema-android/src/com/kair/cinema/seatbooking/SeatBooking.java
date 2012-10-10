@@ -58,6 +58,7 @@ public class SeatBooking extends Activity {
 		int x = 0;
 		int y = 0;
 		int status = 0;
+		String tmpString;
 
 		// get view display pixel metrics
 		displayMetrics = new DisplayMetrics();
@@ -99,6 +100,8 @@ public class SeatBooking extends Activity {
 
 				seat.setX(gridSize + gridSize * x);
 				seat.setY(gridSize + gridSize * y);
+				char c = (char) (65 + x);
+				seat.setAssignment("" + c + y);
 				seat.getLayoutParams().height = cellSize;
 				seat.getLayoutParams().width = cellSize;
 				absoluteLayout.addView(seat);
