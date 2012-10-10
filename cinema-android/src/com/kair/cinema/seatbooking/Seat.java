@@ -31,7 +31,6 @@ public class Seat extends Button {
 			@Override
 			public void onClick(View v) {
 				if (status.equals(SEAT_STATUS_EMPTY)) {
-
 					emptySeatDialog.show();
 				}
 				else {
@@ -54,12 +53,8 @@ public class Seat extends Button {
 	}
 
 	private void initialBookedSeatDialog(final Context context) {
-		emptySeatDialog = new Dialog(context);
-		emptySeatDialog.setContentView(R.layout.empty_seat_view);
-		button = (Button) findViewById(R.id.seat_dialog_button_book);
-		button.setOnClickListener(bookListener);
-		button = (Button) findViewById(R.id.seat_dialgo_button_cancel);
-		button.setOnClickListener(cancelListener);
+		bookedSeatDialog = new Dialog(context);
+		bookedSeatDialog.setContentView(R.layout.booked_seat_view);
 
 	}
 
@@ -84,6 +79,11 @@ public class Seat extends Button {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public void setAssignment(String assignment) {
+		this.setText(assignment);
+		this.setTextSize(12);
 	}
 
 	public void setStatus(String status) {
