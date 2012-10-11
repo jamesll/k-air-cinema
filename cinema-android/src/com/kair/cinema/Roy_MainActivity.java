@@ -1,242 +1,97 @@
 package com.kair.cinema;
 
-import java.util.Calendar;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.TimePicker;
+import android.widget.Spinner;
+
+import com.kair.cinema.seatbooking.SeatBooking;
 
 public class Roy_MainActivity extends Activity {
-
-    private TextView showDate = null;
-    private Button pickDate = null;
-    private TextView showTime = null;
-    public Button pickTime = null;
-    public TextView tv1 = null;
-    public TextView tv5 = null;
-    public ImageView iv5 = null;
-
-    private static final int SHOW_DATAPICK = 0;
-    private static final int DATE_DIALOG_ID = 1;
-    private static final int SHOW_TIMEPICK = 2;
-    private static final int TIME_DIALOG_ID = 3;
-
-    private int mYear;
-    private int mMonth;
-    private int mDay;
-    private int mHour;
-    private int mMinute;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roy__main);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.add("2012/10/1");
+        adapter.add("2012/10/2");
+        adapter.add("2012/10/3");
+        adapter.add("2012/10/4");
+        adapter.add("2012/10/5");
+        adapter.add("2012/10/6");
 
-        ImageView iv1 = (ImageView) findViewById(R.id.ImageView01);
-        tv1 = (TextView) findViewById(R.id.showtime);
-        tv5 = (TextView) findViewById(R.id.TextView05);
-        iv5 = (ImageView) findViewById(R.id.ImageView05);
-
-        initializeViews();
-
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
-
-        // Test Movie picture showup
-        // Ken gor, you can intent in here
-        final Context context = Roy_MainActivity.this.getApplicationContext();
-
-        OnClickListener listener10 = new OnClickListener() {
-            public void onClick(final View v) {
-                new AlertDialog.Builder(context).setTitle("test")
-                        .setMessage("test").setPositiveButton("确定", null)
-                        .show();
-
+        Spinner spinnerDate = (Spinner) findViewById(R.id.sprinner_date);
+        spinnerDate.setAdapter(adapter);
+        spinnerDate.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(final AdapterView<?> parent,
+                    final View view, final int position, final long id) {
+                // Spinner spinner = (Spinner) parent;
+                // Log.v("Test", "id = " + id + "("
+                // + spinner.getSelectedItem().toString() + ")");
             }
-        };
-        iv5.setOnClickListener(listener10);
 
-        setDateTime();
-        setTimeOfDay();
-
-        // System.out.println(tv1.getText());
-
-    }
-
-    /**
-     * 初始化控件和UI视图
-     */
-    private void initializeViews() {
-        showDate = (TextView) findViewById(R.id.showdate);
-        pickDate = (Button) findViewById(R.id.pickdate);
-        showTime = (TextView) findViewById(R.id.showtime);
-        pickTime = (Button) findViewById(R.id.picktime);
-
-        pickDate.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(final View v) {
-                Message msg = new Message();
-                if (pickDate.equals(v)) {
-                    msg.what = Roy_MainActivity.SHOW_DATAPICK;
-                }
-                Roy_MainActivity.this.dateandtimeHandler.sendMessage(msg);
+            @Override
+            public void onNothingSelected(final AdapterView<?> parent) {
             }
         });
 
-        pickTime.setOnClickListener(new View.OnClickListener() {
+        Spinner spinnerTime = (Spinner) findViewById(R.id.sprinner_time);
+        ArrayAdapter<String> adapterTime = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item);
+        adapterTime
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterTime.add("08:00");
+        adapterTime.add("12:00");
+        adapterTime.add("16:00");
+        adapterTime.add("17:00");
+        adapterTime.add("20:00");
+        adapterTime.add("22:00");
+        spinnerTime.setAdapter(adapterTime);
+        spinnerTime.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(final AdapterView<?> parent,
+                    final View view, final int position, final long id) {
+                // Spinner spinner = (Spinner) parent;
+                // Log.v("Test", "id = " + id + "("
+                // + spinner.getSelectedItem().toString() + ")");
+            }
 
-            public void onClick(final View v) {
-                Message msg = new Message();
-                if (pickTime.equals(v)) {
-                    msg.what = Roy_MainActivity.SHOW_TIMEPICK;
-                }
-
-                iv5.setVisibility(View.VISIBLE);
-                tv5.setVisibility(View.VISIBLE);
-
-                System.out.println(tv1.getText());
-                if (tv1.getText().equals("12:58")) {
-                    // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!");
-                    iv5.setVisibility(View.INVISIBLE);
-                    tv5.setVisibility(View.INVISIBLE);
-                }
-
-                Roy_MainActivity.this.dateandtimeHandler.sendMessage(msg);
+            @Override
+            public void onNothingSelected(final AdapterView<?> parent) {
             }
         });
+
+        Button button = (Button) findViewById(R.id.book);
+        button.setOnClickListener(new BookButtonOnClickListener(
+                Roy_MainActivity.this));
     }
 
-    /**
-     * 设置日期
-     */
-    private void setDateTime() {
-        final Calendar c = Calendar.getInstance();
+}
 
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+class BookButtonOnClickListener implements OnClickListener {
+    private Context context;
 
-        updateDateDisplay();
-    }
-
-    /**
-     * 更新日期显示
-     */
-    private void updateDateDisplay() {
-        showDate.setText(new StringBuilder().append(mYear).append("-")
-                .append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1))
-                .append("-").append((mDay < 10) ? "0" + mDay : mDay));
-    }
-
-    /**
-     * 日期控件的事件
-     */
-    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-
-        public void onDateSet(final DatePicker view, final int year,
-                final int monthOfYear, final int dayOfMonth) {
-            mYear = year;
-            mMonth = monthOfYear;
-            mDay = dayOfMonth;
-
-            updateDateDisplay();
-        }
-    };
-
-    /**
-     * 设置时间
-     */
-    private void setTimeOfDay() {
-        final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
-        updateTimeDisplay();
-    }
-
-    /**
-     * 更新时间显示
-     */
-    private void updateTimeDisplay() {
-        showTime.setText(new StringBuilder().append(mHour).append(":")
-                .append((mMinute < 10) ? "0" + mMinute : mMinute));
-    }
-
-    /**
-     * 时间控件事件
-     */
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-
-        public void onTimeSet(final TimePicker view, final int hourOfDay,
-                final int minute) {
-            mHour = hourOfDay;
-            mMinute = minute;
-
-            updateTimeDisplay();
-        }
-    };
-
-    @Override
-    protected Dialog onCreateDialog(final int id) {
-        switch (id) {
-        case DATE_DIALOG_ID:
-            return new DatePickerDialog(this, mDateSetListener, mYear, mMonth,
-                    mDay);
-        case TIME_DIALOG_ID:
-            return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute,
-                    true);
-        }
-
-        return null;
+    public BookButtonOnClickListener(final Context context) {
+        this.context = context;
     }
 
     @Override
-    protected void onPrepareDialog(final int id, final Dialog dialog) {
-        switch (id) {
-        case DATE_DIALOG_ID:
-            ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
-            break;
-        case TIME_DIALOG_ID:
-            ((TimePickerDialog) dialog).updateTime(mHour, mMinute);
-            break;
-        }
+    public void onClick(final View v) {
+        // TODO Auto-generated method stub
+        Intent intent = new Intent(context, SeatBooking.class);
+        context.startActivity(intent);
     }
-
-    /**
-     * 处理日期和时间控件的Handler
-     */
-    Handler dateandtimeHandler = new Handler() {
-
-        @Override
-        public void handleMessage(final Message msg) {
-            switch (msg.what) {
-            case Roy_MainActivity.SHOW_DATAPICK:
-                showDialog(DATE_DIALOG_ID);
-                break;
-            case Roy_MainActivity.SHOW_TIMEPICK:
-                showDialog(TIME_DIALOG_ID);
-                break;
-            }
-        }
-
-    };
 
 }
