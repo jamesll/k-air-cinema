@@ -10,7 +10,6 @@ import android.util.DisplayMetrics;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsoluteLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import com.kair.cinema.R;
 
 public class SeatBooking extends Activity {
@@ -44,10 +43,11 @@ public class SeatBooking extends Activity {
 		initialView();
 
 		// set text for testing
-		TextView textView = (TextView) findViewById(R.id.TestView_0);
-		CharSequence text = "width:" + displayMetrics.widthPixels + "  height:"
-				+ displayMetrics.heightPixels;
-		textView.setText(text);
+		// TextView textView = (TextView) findViewById(R.id.TestView_0);
+		// CharSequence text = "width:" + displayMetrics.widthPixels +
+		// "  height:"
+		// + displayMetrics.heightPixels;
+		// textView.setText(text);
 
 	}
 
