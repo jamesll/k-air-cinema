@@ -12,7 +12,6 @@ import android.widget.GridView;
 
 import com.kair.cinema.adapter.MovieGridAdapter;
 import com.kair.cinema.db.MovieDao;
-import com.kair.cinema.seatbooking.SeatBooking;
 import com.kair.cinema.vo.MovieGridItem;
 
 public class MainActivity extends Activity {
@@ -39,7 +38,8 @@ public class MainActivity extends Activity {
                 // TODO Auto-generated method stub
                 // Toast.makeText(MainActivity.this.getApplicationContext(),
                 // "you choose " + arg2, 1000).show();
-                Intent intent = new Intent(MainActivity.this, SeatBooking.class);
+                Intent intent = new Intent(MainActivity.this,
+                        Roy_MainActivity.class);
                 startActivity(intent);
             }
         });
