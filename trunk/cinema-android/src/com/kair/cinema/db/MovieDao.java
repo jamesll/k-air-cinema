@@ -9,7 +9,8 @@ public class MovieDao {
 
 	public List<MovieGridItem> findMovieGridItem() {
 		ArrayList list = new ArrayList<MovieGridItem>();
-		list.add(new MovieGridItem("Double Xposeure", R.drawable.double_xposeure_small));
+		// list.add(new MovieGridItem("Double Xposeure",
+		// R.drawable.double_xposeure_small));
 		list.add(new MovieGridItem("End of Watch", R.drawable.end_of_watch_small));
 		list.add(new MovieGridItem("Finding Nemo", R.drawable.finding_nemo_small));
 		list.add(new MovieGridItem("Frankenweenie", R.drawable.frankenweenie_small));
